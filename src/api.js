@@ -1,16 +1,20 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const user = require('./users.handler')
 
 const app = express()
 
 const port = 3000
 
-app.get('/api/', (req, res) => {
-    res.send('Hola Mundo')
-})
+app.use(express.json())
+
+mongoose.connect('mongodb+srv://fabianandrade:fabianandrade@myapp.nnykq.mongodb.net/api-db?retryWrites=true&w=majority&appName=MyApp');
+
+
+app.get('/api/', user.list)
+app.post('/api/', user.create)
 
 app.listen(port, () => {
     console.log(`El ejemplo se está ejecutando en el puerto ${port}`);
-    console.log('Run in: http://localhost:3000/api/');
-    
-    
+    console.log('Run in: http://localhost:3000/api/');    
 })
